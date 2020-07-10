@@ -24,6 +24,7 @@ export class EventosComponent implements OnInit {
   filterLista: string;
   registerForm: FormGroup;
   modoSalvar = 'post';
+  bodyDeletarEvento = '';
 
   constructor(private eventoService: EventoService,
               private modalService: BsModalService,
@@ -80,6 +81,25 @@ export class EventosComponent implements OnInit {
     this.openModal(template);
     this.evento = evento;
     this.registerForm.patchValue(evento);
+    location.reload();
+  }
+
+  excluirEvento(evento: Evento, template: any) {
+    this.openModal(template);
+    this.evento = evento;
+    this.bodyDeletarEvento = `Tem certeza que deseja excluir o Evento: ${evento.tema}, Código: ${evento.tema}`;
+  }
+
+  confirmeDelete(template: any) {
+    this.eventoService.deleteEvento(this.evento).subscribe(
+      () => {
+          template.hide();
+          this.getEventos();
+          location.reload();
+        }, error => {
+          console.log(error);
+        }
+    );
   }
 
   novoEvento(template: any){

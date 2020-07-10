@@ -110,7 +110,7 @@ namespace ProAgil.API2.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpDelete("Delete/{EventoId}")]
         public async Task<IActionResult> Delete(int EventoId){
         
         try
