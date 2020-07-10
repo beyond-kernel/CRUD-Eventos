@@ -5,3 +5,4 @@ C:\Users\Rafael\OneDrive\Udemy\Fullstack_AspNetCore_Angular\GameTOP\GameTOP.Inte
 C:\Users\Rafael\OneDrive\Udemy\Fullstack_AspNetCore_Angular\GameTOP\GameTOP.Interface\obj\Debug\netcoreapp3.1\GameTOP.Interface.AssemblyInfo.cs
 C:\Users\Rafael\OneDrive\Udemy\Fullstack_AspNetCore_Angular\GameTOP\GameTOP.Interface\obj\Debug\netcoreapp3.1\GameTOP.Interface.dll
 C:\Users\Rafael\OneDrive\Udemy\Fullstack_AspNetCore_Angular\GameTOP\GameTOP.Interface\obj\Debug\netcoreapp3.1\GameTOP.Interface.pdb
+C:\Users\Rafael\OneDrive\Udemy\Fullstack_AspNetCore_Angular\GameTOP\GameTOP.Interface\obj\Debug\netcoreapp3.1\GameTOP.Interface.csprojAssemblyReference.cache
