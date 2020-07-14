@@ -81,7 +81,6 @@ export class EventosComponent implements OnInit {
     this.openModal(template);
     this.evento = evento;
     this.registerForm.patchValue(evento);
-    location.reload();
   }
 
   excluirEvento(evento: Evento, template: any) {

@@ -65,7 +65,8 @@ namespace Repository
 
             if (includePlaestrantes)
             {
-                query = query.Include(x => x.PalestranteEvento).ThenInclude(pe => pe.Palestrante);
+                query = query.Include(x => x.PalestranteEvento).
+                        ThenInclude(pe => pe.Palestrante);
             }
 
             query = query.OrderByDescending(x => x.DataEvento).Where(x => x.Tema.Contains(tema));
