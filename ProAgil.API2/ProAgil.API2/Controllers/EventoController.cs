@@ -13,7 +13,7 @@ using Repository;
 namespace ProAgil.API2.Controllers
 {
     [Route("site/Evento")]
-    [ApiController]
+    [ApiController] //utilizado no dotnet core substituindo o frombody
     public class EventoController : ControllerBase
     {
         // private readonly DataContext _dataContext;
