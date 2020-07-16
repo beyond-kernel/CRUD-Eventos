@@ -1,11 +1,13 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { EventoService } from '../_services/evento.service';
-import { Evento } from '../models/evento';
+import { Evento } from '../_models/evento';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { defineLocale, ptBrLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { ToastrService } from 'ngx-toastr';
+
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -29,7 +31,8 @@ export class EventosComponent implements OnInit {
   constructor(private eventoService: EventoService,
               private modalService: BsModalService,
               private fb: FormBuilder,
-              private localeService: BsLocaleService){this.localeService.use('pt-br');
+              private localeService: BsLocaleService,
+              private toastr: ToastrService){this.localeService.use('pt-br');
             }
 
   get filtroLista(): string {
@@ -94,8 +97,10 @@ export class EventosComponent implements OnInit {
       () => {
           template.hide();
           this.getEventos();
+          this.toastr.success('Evento deletado com sucesso', this.evento.tema);
           location.reload();
         }, error => {
+          this.toastr.error(`Erro ao deletar evento: ${error}`, this.evento.tema);
           console.log(error);
         }
     );
@@ -115,7 +120,11 @@ export class EventosComponent implements OnInit {
           console.log(newEvent);
           template.hide();
           this.getEventos();
-        }, error => { console.log(error); }
+          this.toastr.success('Evento inserido com sucesso', this.evento.tema);
+        }, error => {
+          console.log(error);
+          this.toastr.error(`Erro ao salvar evento: ${error}`, this.evento.tema);
+        }
       );
       }
       else{
@@ -124,7 +133,11 @@ export class EventosComponent implements OnInit {
           () => {
             template.hide();
             this.getEventos();
-          }, error => { console.log(error); }
+            this.toastr.success('Evento atualizado com sucesso', this.evento.tema);
+          }, error => {
+            console.log(error);
+            this.toastr.error(`Erro ao atualizar evento: ${error}`, this.evento.tema);
+          }
         );
       }
     }
@@ -155,6 +168,7 @@ validation(){
       },
       (error) => {
         console.log(error);
+        this.toastr.error(`Erro ao carregar evento`, 'Evento');
       }
     );
   }

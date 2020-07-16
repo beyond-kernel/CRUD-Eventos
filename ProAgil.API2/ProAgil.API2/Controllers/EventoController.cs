@@ -94,8 +94,8 @@ namespace ProAgil.API2.Controllers
             return BadRequest();
         }
 
-  // GET: api/Evento/EventoId
-        [HttpPut("put/{EventoId}")]
+  // GET: site/Evento/EventoId
+        [HttpPut]
         public async Task<IActionResult> Put(EventoDto model)
         {
             try
