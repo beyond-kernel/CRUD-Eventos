@@ -48,7 +48,7 @@
       <td>
         <img
         *ngIf="showImage"
-        src="https://localhost:5001/img/{{ evento.imagemUrl }}"
+        src="https://localhost:5001/Resources/img/{{ evento.imagemUrl }}?_ts={{dataAtual}}"
         [style.width.px]="imgAltura"
         [style.margin.px]="imgMargem"
         />
@@ -121,7 +121,14 @@
             </div>
             <div class="form-group col-md-9">
               <label>Imagem</label>
-              <input type="text" class="form-control" formControlName="imagemUrl" >
+              <table>
+                <tr>
+                  <td>                    
+                    <button class="btn btn-success" (click)="file.click()">Send Image</button>
+                    <input style="display: none;" #file type="file" class="form-control"  (change)="onFileChange($event)" formControlName="imagemUrl" >
+                  </td>
+                </tr>
+              </table>
             </div>
           </div>  
           <div class="form-row">

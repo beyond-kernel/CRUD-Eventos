@@ -27,6 +27,9 @@ export class EventosComponent implements OnInit {
   registerForm: FormGroup;
   modoSalvar = 'post';
   bodyDeletarEvento = '';
+  file: File;
+  fileNameToUpdate: string;
+  dataAtual = new Date().getMilliseconds().toString();
 
   constructor(private eventoService: EventoService,
               private modalService: BsModalService,
@@ -69,6 +72,13 @@ export class EventosComponent implements OnInit {
     this.showImage = !this.showImage;
   }
 
+  onFileChange(event){
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length){
+      this.file = event.target.files;
+    }
+  }
+
   ngOnInit() {
     this.validation();
     this.getEventos();
@@ -82,8 +92,10 @@ export class EventosComponent implements OnInit {
   editarEvento(evento: Evento, template: any){
     this.modoSalvar = 'put';
     this.openModal(template);
-    this.evento = evento;
-    this.registerForm.patchValue(evento);
+    this.evento = Object.assign({}, evento);
+    this.evento.imagemUrl = '';
+    this.fileNameToUpdate = evento.imagemUrl.toString();
+    this.registerForm.patchValue(this.evento);
   }
 
   excluirEvento(evento: Evento, template: any) {
@@ -115,6 +127,15 @@ export class EventosComponent implements OnInit {
     if (this.registerForm.valid){
       if (this.modoSalvar === 'post'){
       this.evento = Object.assign({}, this.registerForm.value);
+      const nameFile = this.evento.imagemUrl.split('\\', 3);
+      this.evento.imagemUrl = nameFile[2];
+      this.eventoService.postUpload(this.file, nameFile[2]).subscribe(
+        () => {
+          this.dataAtual = new Date().getMilliseconds().toString();
+          this.getEventos();
+        }
+      );
+
       this.eventoService.postEvento(this.evento).subscribe(
         (newEvent: Evento) => {
           console.log(newEvent);
@@ -129,6 +150,14 @@ export class EventosComponent implements OnInit {
       }
       else{
         this.evento = Object.assign({eventoId: this.evento.eventoId }, this.registerForm.value);
+        // const nameFile = this.evento.imagemUrl.split('\\', 3);
+        this.evento.imagemUrl = this.fileNameToUpdate;
+        this.eventoService.postUpload(this.file, this.fileNameToUpdate).subscribe(
+          () => {
+            this.dataAtual = new Date().getMilliseconds().toString();
+            this.getEventos();
+          }
+        );
         this.eventoService.putEvento(this.evento).subscribe(
           () => {
             template.hide();
